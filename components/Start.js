@@ -22,20 +22,17 @@ export default class Start extends React.Component {
     return (
       //these are all the parts that make up the home page of this chat app.
       <View style={Styles.container}>
-        //this is the background image of the home page
         <ImageBackground
           source={backgroundImage}
           resizeMode="cover"
           style={Styles.backgroundImage}
         >
-          //this is the name of the app
           <View style={Styles.heading}>
             <Text style={{ fontSize: 40, fontWeight: 'bold', paddingBottom: 300, color: "#ffffff" }}>
               Chatter App
             </Text>
           </View>
           <View style={Styles.container2}>
-            //This is the box where a user can enter their name
             <TextInput
               style={Styles.input}
               placeholder="Your Name"
@@ -45,7 +42,6 @@ export default class Start extends React.Component {
               value={this.state.name}
             />
 
-            //this is box with option of colors which user can pick for their chat screen
             <View style={Styles.colorBox}>
               <View>
                 <Text style={{ paddingBottom: 10 }}>
@@ -93,7 +89,6 @@ export default class Start extends React.Component {
             </View>
 
             <View style={Styles.buttonContainer}>
-              //this is the button which the user presses when they have to enter the chat
               <TouchableOpacity
                 onPress={() =>
                   this.props.navigation.navigate("Chat", {
