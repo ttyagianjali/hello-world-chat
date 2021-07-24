@@ -50,7 +50,7 @@ export default class Chat extends React.Component {
   //fetch and display existing messages
   componentDidMount() {
     const { name } = this.props.route.params;
-    this.props.navigation.setOptions({ title: `${name}'s Chat` });
+    this.props.navigation.setOptions({ title: `${name}` });
 
     // checks user connect
     NetInfo.fetch().then((connection) => {
@@ -84,10 +84,10 @@ export default class Chat extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    this.authUnsubscribe();
-    this.unsubscribe();
-  }
+  // componentWillUnmount() {
+  //   this.authUnsubscribe();
+  //   this.unsubscribe();
+  // }
 
   //when something changes in the messages
   onCollectionUpdate = (querySnapshot) => {
