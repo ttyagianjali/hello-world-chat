@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
 
 //import the screens from components folder
 import Start from "./components/Start";
