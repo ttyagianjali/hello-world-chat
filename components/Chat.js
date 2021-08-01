@@ -9,17 +9,6 @@ import MapView from "react-native-maps";
 import firebase from "firebase";
 import "firebase/firestore";
 
-//config to allow the app to connect to Firestore.
-const firebaseConfig = {
-  apiKey: "AIzaSyCIU3ycZ3NoOiJeUp3OsXrL-OihOsQFxa4",
-  authDomain: "chat-app-d0e18.firebaseapp.com",
-  projectId: "chat-app-d0e18",
-  storageBucket: "chat-app-d0e18.appspot.com",
-  messagingSenderId: "186371536966",
-  appId: "1:186371536966:web:317a7fe535317a68b43247",
-  measurementId: "G-K81LMTVE93",
-};
-
 // The application’s main Chat component that renders the chat UI
 export default class Chat extends React.Component {
   constructor(props) {
@@ -27,13 +16,22 @@ export default class Chat extends React.Component {
     this.state = {
       messages: [],
       uid: 0,
-      // user: {
-      //   _id: "",
-      //   name: "",
-      // },
       isConnected: false,
       image: null,
+      location: null,
     };
+
+    //config to allow the app to connect to Firestore.
+    const firebaseConfig = {
+      apiKey: "AIzaSyCIU3ycZ3NoOiJeUp3OsXrL-OihOsQFxa4",
+      authDomain: "chat-app-d0e18.firebaseapp.com",
+      projectId: "chat-app-d0e18",
+      storageBucket: "chat-app-d0e18.appspot.com",
+      messagingSenderId: "186371536966",
+      appId: "1:186371536966:web:317a7fe535317a68b43247",
+      measurementId: "G-K81LMTVE93",
+    };
+
     //connect to firebase
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
@@ -61,10 +59,6 @@ export default class Chat extends React.Component {
             }
             this.setState({
               uid: user.uid,
-              // user: {
-              //   _id: user.uid,
-              //   name: name,
-              // },
               messages: [],
             });
             this.unsubscribe = this.referenceChatMessages
@@ -113,22 +107,6 @@ export default class Chat extends React.Component {
       messages,
     });
   };
-
-  // handleConnectivityChange = (state) => {
-  //   const isConnected = state.isConnected;
-  //   if (isConnected == true) {
-  //     this.setState({
-  //       isConnected: true,
-  //     });
-  //     this.unsubscribe = this.referenceChatMessages
-  //       .orderBy("createdAt", "desc")
-  //       .onSnapshot(this.onCollectionUpdate);
-  //   } else {
-  //     this.setState({
-  //       isConnected: false,
-  //     });
-  //   }
-  // };
 
   // Adds messages to cloud storage
   addMessage = () => {
@@ -191,11 +169,9 @@ export default class Chat extends React.Component {
     );
   };
 
-  // disables message input bar if offline
+  //prevents any input if a user is offline
   renderInputToolbar = (props) => {
-    console.log("renderInputToolbar --> props", props.isConnected);
-    if (props.isConnected === false) {
-      return <InputToolbar {...props} />;
+    if (this.state.isConnected == false) {
     } else {
       return <InputToolbar {...props} />;
     }
@@ -252,7 +228,7 @@ export default class Chat extends React.Component {
       >
         <GiftedChat
           messages={this.state.messages}
-          isConnected={this.state.isConnected}
+          renderBubble={this.renderBubble}
           renderInputToolbar={this.renderInputToolbar}
           renderActions={this.renderCustomActions}
           renderCustomView={this.renderCustomView}
